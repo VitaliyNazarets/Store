@@ -1,14 +1,9 @@
 ﻿using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.IO;
-using System.Reflection;
 
 namespace Tests
 {
@@ -54,7 +49,20 @@ namespace Tests
 			}
 		}
 
-
+		[Fact]
+		public void FirstVideoFromTrendingTest()
+		{
+			using (seleniumAdapter = new SeleniumAdapter("https://www.youtube.com/feed/trending"))
+			{
+				var driver = seleniumAdapter.GetDriver();
+				driver.Manage().Window.Maximize();
+				var videos = driver.FindElements(By.ClassName("ytd-video-renderer"));
+				Assert.True(videos.Count > 0);
+				var video = videos[0];
+				video.Click();
+				Assert.StartsWith("https://www.youtube.com/watch", driver.Url);
+			}
+		}
 	}
 
 	internal class SeleniumAdapter : IDisposable
