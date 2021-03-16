@@ -18,6 +18,10 @@ namespace Store
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
+			.ConfigureLogging(logBuilder =>
+			{
+				logBuilder.AddConsole();
+			})
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
