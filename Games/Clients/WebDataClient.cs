@@ -24,9 +24,10 @@ namespace Store.Clients
 		public WebDataClient(IHttpClientFactory httpFactory, IOptions<WebDataOptions> options, ILogger logger)
 		{
 			_client = httpFactory.CreateClient();
-			_client.BaseAddress = new Uri(_options.DataUrl);
-			_logger = logger;
 			_options = options.Value;
+
+			_client.BaseAddress = new Uri(_options.WebSource);
+			_logger = logger;
 		}
 		public async Task<IEnumerable<IProduct>> GetNewProductsAsync()
 		{

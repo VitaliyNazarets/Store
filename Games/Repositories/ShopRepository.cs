@@ -1,4 +1,5 @@
 ﻿using Store.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Store.Repositories
 			_source = source;
 		}
 
-		public async Task<IEnumerable<T>> GetProductsAsync() => await _source.GetListAsync().ConfigureAwait(false);
+		public async Task<IEnumerable<T>> GetProductsAsync() => await _source.GetIenumerableAsync().ConfigureAwait(false);
 
 		public decimal CalculateProductsPrice(IEnumerable<T> products)
 		{
@@ -27,12 +28,44 @@ namespace Store.Repositories
 			return await _source.GetAsync(name).ConfigureAwait(false);
 		}
 
+		public async Task UpdateProductAsync(T product)
+		{
+			await _source.UpdateAsync(product);
+		}
+
 		public async Task UpdateNewProductsAsync()
 		{
 			var products = await _client.GetNewProductsAsync().ConfigureAwait(false);
 			foreach (var product in products)
 			{
 				await _source.AddAsync(product).ConfigureAwait(false);
+			}
+		}
+
+		public async Task<bool> AddProductsAsync(IEnumerable<T> products)
+		{
+			try
+			{
+				List<Task> list = new List<Task>();
+
+				foreach (var product in products)
+				{
+					list.Add(Task.Run(async () =>
+					{
+						var existingProduct = await _source.GetAsync(product.Name).ConfigureAwait(false);
+
+						if (existingProduct == null)
+							await _source.AddAsync(product).ConfigureAwait(false);
+						else
+							throw new ArgumentException("Product is already exists");
+					}));
+				}
+				var result = await Task.WhenAll(list).ContinueWith(task => task.IsCompletedSuccessfully).ConfigureAwait(false);
+				return result;
+			}
+			catch (Exception)
+			{
+				return false;
 			}
 		}
 	}

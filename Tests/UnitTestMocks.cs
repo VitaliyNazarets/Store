@@ -77,7 +77,7 @@ namespace Tests
 			List<IProduct> expectedList = new List<IProduct>();
 			for (int i = 0; i < 5; i++)
 				expectedList.Add(GenerateProduct($"name {i}", i));
-			mockSource.Setup(f => f.GetListAsync()).ReturnsAsync(expectedList);
+			mockSource.Setup(f => f.GetIenumerableAsync()).ReturnsAsync(expectedList);
 			var result = await shopRepository.GetProductsAsync();
 			Assert.Equal(expectedList.Count, result.Count());
 			for (int i = 0; i < expectedList.Count; i++)
@@ -90,7 +90,7 @@ namespace Tests
 		[Fact]
 		public void GetProductsAsyncThrowsException()
 		{
-			mockSource.Setup(f => f.GetListAsync()).ThrowsAsync(new Exception());
+			mockSource.Setup(f => f.GetIenumerableAsync()).ThrowsAsync(new Exception());
 			Assert.ThrowsAsync<Exception>(async () => await shopRepository.GetProductsAsync());
 		}
 

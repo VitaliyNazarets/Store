@@ -11,5 +11,7 @@ namespace Store.Interfaces
 		public Task UpdateNewProductsAsync();
 		public decimal CalculateProductsPrice(IEnumerable<T> products);
 		public Task<IEnumerable<T>> GetProductsAsync();
+		public Task<bool> AddProductsAsync(IEnumerable<T> products);
+		public Task UpdateProductAsync(T product);
 	}
 }

@@ -38,10 +38,14 @@ namespace Store
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Add(ServiceDescriptor.Singleton<ILoggerFactory, LoggerFactory>());
+			services.AddOptions();
 
-			//services.AddSingleton<IClient<IProduct>, Client<IProduct>>();
-			services.Configure<IOptions<WebDataOptions>>(Configuration.GetSection("WebClient"));
+			services.Add(ServiceDescriptor.Singleton<ILoggerFactory, LoggerFactory>());
+			//var config = new ConfigurationBuilder()
+			//   .AddJsonFile("appsettings.json", optional: false)
+			//   .Build();
+
+			services.Configure<WebDataOptions>(Configuration.GetSection("WebClient"));
 
 			services.AddSingleton<IDataSource<IProduct>, DataSource<IProduct>>();
 			services.AddHttpClient("HttpClient")
