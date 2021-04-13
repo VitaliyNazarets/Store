@@ -12,7 +12,7 @@ namespace Store.Data
 		private ConcurrentDictionary<string, T> _products = new ConcurrentDictionary<string, T>();
 		public Task AddAsync(T value)
 		{
-			if (value.Name.Length < 2 || value.Price < 0 || value.Name.Length > 100)
+			if (string.IsNullOrEmpty(value.Name) || value.Name.Length < 2 || value.Price < 0 || value.Name.Length > 100)
 				throw new ArgumentException();
 
 			return Task.FromResult(_products.GetOrAdd(value.Name, value));
