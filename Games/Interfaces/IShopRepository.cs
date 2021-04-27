@@ -13,5 +13,6 @@ namespace Store.Interfaces
 		public Task<IEnumerable<T>> GetProductsAsync();
 		public Task<bool> AddProductsAsync(IEnumerable<T> products);
 		public Task UpdateProductAsync(T product);
+		public int Count();
 	}
 }

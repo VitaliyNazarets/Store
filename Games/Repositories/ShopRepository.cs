@@ -68,5 +68,10 @@ namespace Store.Repositories
 				return false;
 			}
 		}
+
+		public int Count()
+		{
+			return _source.Count();
+		}
 	}
 }

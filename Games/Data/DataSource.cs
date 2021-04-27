@@ -20,10 +20,7 @@ namespace Store.Data
 
 		public Task<T> GetAsync(string name)
 		{
-			var t = _products.GetValueOrDefault(name);
-			if (t is null)
-				throw new ArgumentNullException();
-			return Task.FromResult(t);
+			return Task.FromResult(_products.GetValueOrDefault(name));
 		}
 
 		public Task<IEnumerable<T>> GetIenumerableAsync()
@@ -43,6 +40,11 @@ namespace Store.Data
 		{
 			return Task.FromResult(_products.TryGetValue(value.Name, out T currentValue)
 				? _products.TryUpdate(value.Name, value, currentValue) : throw new Exception($"Can't find IProduct: {value.Name}"));
+		}
+
+		public int Count()
+		{
+			return _products.Count;
 		}
 	}
 }

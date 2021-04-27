@@ -11,9 +11,7 @@ namespace Tests
 {
 	public class DataDrivenUnitTests
 	{
-		private readonly Mock<IClient<IProduct>> mockClient;
 		private readonly IDataSource<IProduct> source;
-		private readonly IShopRepository<IProduct> shopRepository;
 
 		private static readonly Product[] products = new Product[]
 		{
@@ -31,14 +29,13 @@ namespace Tests
 
 		public DataDrivenUnitTests()
 		{
-			mockClient = new Mock<IClient<IProduct>>();
 			source = new DataSource<IProduct>();
-			shopRepository = new ShopRepository<IProduct>(mockClient.Object, source);
 		}
 
 		[Theory]
 		[InlineData("1", 100.00, false)]
 		[InlineData("12", -10, false)]
+		[InlineData(null, 12, false)]
 		[InlineData("Product name", 0, true)]
 		[InlineData("Product name 2", 10000, true)]
 		public async Task DataTestsAdd(string name, decimal price, bool isCorrect)
