@@ -11,7 +11,7 @@ using Xunit;
 namespace Tests
 {
 	[TestCaseOrderer("Tests.Orders.PriorityOrderer", "Tests")]
-    public class ByPriorityOrder
+    public class OrderedTests
     {
         public static bool AddDataCalled;
         public static bool CalculatePriceCalled;
