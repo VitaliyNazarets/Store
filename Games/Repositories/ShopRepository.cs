@@ -16,7 +16,7 @@ namespace Store.Repositories
 			_source = source;
 		}
 
-		public async Task<IEnumerable<T>> GetProductsAsync() => await _source.GetIenumerableAsync().ConfigureAwait(false);
+		public async Task<IEnumerable<T>> GetProductsAsync() => await _source.GetIEnumerableAsync().ConfigureAwait(false);
 
 		public decimal CalculateProductsPrice(IEnumerable<T> products)
 		{

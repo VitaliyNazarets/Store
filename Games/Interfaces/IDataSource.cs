@@ -9,7 +9,7 @@ namespace Store.Interfaces
 		public Task AddAsync(T value);
 		public Task RemoveAsync(string name);
 		public Task UpdateAsync(T value);
-		public Task<IEnumerable<T>> GetIenumerableAsync();
+		public Task<IEnumerable<T>> GetIEnumerableAsync();
 		public int Count();
 	}
 }

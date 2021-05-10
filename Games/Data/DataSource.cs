@@ -9,7 +9,7 @@ namespace Store.Data
 {
 	public class DataSource<T> : IDataSource<T>  where T : IProduct
 	{
-		private ConcurrentDictionary<string, T> _products = new ConcurrentDictionary<string, T>();
+		private readonly ConcurrentDictionary<string, T> _products = new ConcurrentDictionary<string, T>();
 		public Task AddAsync(T value)
 		{
 			if (string.IsNullOrEmpty(value.Name) || value.Name.Length < 2 || value.Price < 0 || value.Name.Length > 100)
@@ -23,7 +23,7 @@ namespace Store.Data
 			return Task.FromResult(_products.GetValueOrDefault(name));
 		}
 
-		public Task<IEnumerable<T>> GetIenumerableAsync()
+		public Task<IEnumerable<T>> GetIEnumerableAsync()
 		{
 			return Task.FromResult(_products.Select(f => f.Value));
 		}
